@@ -3,6 +3,9 @@ import QuestionCard from "./components/QuestionCard";
 
 import { fetchQuizQuestions, Difficulty, QuestionState } from "./API";
 
+//Styles
+import { GlobalStyles, Wrapper } from "./App.styles";
+
 export type AnswerObject = {
   question: string;
   answer: string;
@@ -68,37 +71,40 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>REACT QUIZ</h1>
-      {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-        <button className="start" onClick={startTrivia}>
-          START
-        </button>
-      ) : null}
+    <React.Fragment>
+      <GlobalStyles />
+      <Wrapper>
+        <h1>REACT QUIZ</h1>
+        {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
+          <button className="start" onClick={startTrivia}>
+            START
+          </button>
+        ) : null}
 
-      {!gameOver ? <p className="score">Score:</p> : null}
+        {!gameOver ? <p className="score">Score: {score}</p> : null}
 
-      {/* Implement spinner later */}
-      {loading ? <p>Loading Questions...</p> : null}
-      {!loading && !gameOver && (
-        <QuestionCard
-          questionNumber={number + 1}
-          totalQuestions={TOTAL_QUESTIONS}
-          question={questions[number].question}
-          answers={questions[number].answers}
-          userAnswer={userAnswers[number]}
-          callback={checkAnswer}
-        />
-      )}
-      {!gameOver &&
-      !loading &&
-      userAnswers.length === number + 1 &&
-      number !== TOTAL_QUESTIONS - 1 ? (
-        <button className="next" onClick={nextQuestion}>
-          Next Question
-        </button>
-      ) : null}
-    </div>
+        {/* Implement spinner later */}
+        {loading ? <p>Loading Questions...</p> : null}
+        {!loading && !gameOver && (
+          <QuestionCard
+            questionNumber={number + 1}
+            totalQuestions={TOTAL_QUESTIONS}
+            question={questions[number].question}
+            answers={questions[number].answers}
+            userAnswer={userAnswers[number]}
+            callback={checkAnswer}
+          />
+        )}
+        {!gameOver &&
+        !loading &&
+        userAnswers.length === number + 1 &&
+        number !== TOTAL_QUESTIONS - 1 ? (
+          <button className="next" onClick={nextQuestion}>
+            Next Question
+          </button>
+        ) : null}
+      </Wrapper>
+    </React.Fragment>
   );
 }
 
